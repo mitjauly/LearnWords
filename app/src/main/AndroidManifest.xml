@@ -15,8 +15,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddWord" />
-        <activity android:name=".VewWordsActivity" />
+        <activity android:name=".AddWordActivity"
+            android:parentActivityName=".LearnActivity" >
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".LearnActivity"
+            />
+                </activity>/>
+        <activity android:name=".ViewWordsActivity"
+            android:parentActivityName=".LearnActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LearnActivity"
+                />
+                </activity>/>
         <activity android:name=".SettingsActivity"></activity>
     </application>
 
