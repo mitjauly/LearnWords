@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by User on 1/31/2017.
@@ -53,10 +55,7 @@ public class UserWordsDB extends SQLiteOpenHelper {
                 + "RUCOUNT" + " INTEGER NOT NULL DEFAULT 0);";
 
         db.execSQL(SQL_CREATE_USERWORDDB_TABLE);
-
     }
-
-
 
     public static void AddElem(Context context, String EnWord, String RuWord) {
         UserWordsDB dbOpenHelper = new UserWordsDB(context);
@@ -78,15 +77,25 @@ public class UserWordsDB extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return  cnt;
-
     }
 
-
+    // Delets all DB(for testing purposes)
     public static void PurgeDB(Context context) {
 
         UserWordsDB dbOpenHelper = new UserWordsDB(context);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         db.delete(TABLE_NAME, null, null);
+        db.close();
+    }
+
+    // Delets selected positions
+    public static void DeletePositions(Context context, Set<Integer> IDsList) {
+        UserWordsDB dbOpenHelper = new UserWordsDB(context);
+        SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+        for (Integer id:IDsList) {
+            String stringID = String.valueOf(id);
+            db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE _id = '" + stringID + "'");
+        }
         db.close();
     }
 
@@ -102,13 +111,13 @@ public class UserWordsDB extends SQLiteOpenHelper {
                 "RUCOUNT"};
 
         Cursor cursor = db.query(
-                TABLE_NAME,   // таблица
-                projection,            // столбцы
-                null,                  // столбцы для условия WHERE
-                null,                  // значения для условия WHERE
-                null,                  // Don't group the rows
-                null,                  // Don't filter by row groups
-                null);                   // порядок сортировки
+                TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null);
 
         try{
         while (cursor.moveToNext()) {
@@ -119,12 +128,8 @@ public class UserWordsDB extends SQLiteOpenHelper {
                     cursor.getInt(cursor.getColumnIndex("ENCOUNT")),
                     cursor.getInt(cursor.getColumnIndex("RUCOUNT"))
             ));
-
-
         }
-
         } finally {
-            // Всегда закрываем курсор после чтения
             cursor.close();
         }
 

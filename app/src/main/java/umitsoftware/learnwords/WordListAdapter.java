@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.DragEvent;
@@ -17,13 +18,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHolder> {
     private  Context context;
     private ArrayList<UserWord> list;
-    public ArrayList<Integer> selectedItems;
+    public Set<Integer> selectedItems;
 
     public  WordListAdapter(Context cntext){
  context=cntext;
@@ -31,12 +34,19 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
 
     public void clearSelected(){
 
+
+        //new DeleteSelected().execute(context,selectedItems);
+      UserWordsDB.DeletePositions(context, selectedItems);
+     //   this.notifyDataSetChanged();
+
     }
+
+
 
     @Override
     public WordListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         list=UserWordsDB.GetAll(context);
-        selectedItems=new ArrayList<>();
+        selectedItems=new HashSet<>();
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listword_card,parent,false));
 
 
@@ -48,7 +58,15 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
         holder.pos=position;
         holder.engWord.setText(list.get(position).EnWord);
         holder.rusWord.setText(list.get(position).RuWord);
-
+        if(list.get(position).EnCount>2) holder.engStar3.setVisibility(View.VISIBLE);
+        if(list.get(position).EnCount>1) holder.engStar2.setVisibility(View.VISIBLE);
+        if(list.get(position).EnCount>0) holder.engStar1.setVisibility(View.VISIBLE);
+        if(list.get(position).RuCount>2) holder.rusStar3.setVisibility(View.VISIBLE);
+        if(list.get(position).RuCount>1) holder.rusStar2.setVisibility(View.VISIBLE);
+        if(list.get(position).RuCount>0) holder.rusStar1.setVisibility(View.VISIBLE);
+        if((list.get(position).EnCount>2)&&(list.get(position).RuCount>2)) {
+            holder.ll.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+        }
         /*if(holder.selected) holder.engStar1.setVisibility(View.VISIBLE);
         else holder.engStar1.setVisibility(View.INVISIBLE);*/
         //list[position].
@@ -96,14 +114,15 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
                 selected=!selected;
                 if(selected) {
                     ll.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-
+                    selectedItems.add(id);
                 }
                 else
                 {
                     ll.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+                    selectedItems.remove(id);
                 }
 
-                engWord.setText(Integer.toString(id));
+                //engWord.setText(Integer.toString(id));
                 //ll.setBackgroundColor(Color.BLACK);
             }
         });
