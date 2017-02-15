@@ -44,7 +44,8 @@
                     android:adjustViewBounds="false"
                     android:cropToPadding="false"
                     android:layout_height="24dp"
-                    android:layout_width="5dp" />
+                    android:layout_width="5dp"
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:layout_height="24dp"
@@ -52,7 +53,8 @@
                     android:id="@+id/ivStarEng2"
                     android:layout_weight="1"
                     android:layout_width="5dp"
-                    android:layout_marginLeft="2dp" />
+                    android:layout_marginLeft="2dp"
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:layout_height="24dp"
@@ -60,7 +62,8 @@
                     android:id="@+id/ivStarEng3"
                     android:layout_weight="1"
                     android:layout_width="5dp"
-                    android:layout_marginLeft="2dp" />
+                    android:layout_marginLeft="2dp"
+                    android:visibility="invisible" />
             </LinearLayout>
         </LinearLayout>
 
@@ -94,7 +97,8 @@
                     android:adjustViewBounds="false"
                     android:cropToPadding="false"
                     android:layout_height="24dp"
-                    android:layout_width="5dp" />
+                    android:layout_width="5dp"
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:layout_width="4dp"
@@ -102,14 +106,16 @@
                     card_view:srcCompat="@android:drawable/star_big_on"
                     android:id="@+id/ivStarRus2"
                     android:layout_weight="1"
-                    android:layout_marginLeft="2dp" />
+                    android:layout_marginLeft="2dp"
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:layout_width="4dp"
                     android:layout_height="24dp"
                     card_view:srcCompat="@android:drawable/star_big_on"
                     android:id="@+id/ivStarRus3"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:visibility="invisible" />
             </LinearLayout>
         </LinearLayout>
 
