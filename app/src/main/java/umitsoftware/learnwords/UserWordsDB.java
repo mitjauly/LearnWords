@@ -89,6 +89,18 @@ public class UserWordsDB extends SQLiteOpenHelper {
         return  cnt;
     }
 
+    public static Stats GetStats(Context context) {
+        UserWordsDB dbOpenHelper = new UserWordsDB(context);
+        SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+        Cursor cursorAll = db.rawQuery( "SELECT  * FROM " + TABLE_NAME , null);
+        Cursor cursorLeant = db.rawQuery( "SELECT  * FROM " + TABLE_NAME + " WHERE RUCOUNT > 2 AND ENCOUNT > 2", null);
+        Stats result=new Stats(cursorLeant.getCount(),cursorAll.getCount()-cursorLeant.getCount());
+        cursorAll.close();
+        cursorLeant.close();
+        db.close();
+        return  result;
+    }
+
     // Delets all DB(for testing purposes)
     public static void PurgeDB(Context context) {
 
@@ -144,6 +156,8 @@ public class UserWordsDB extends SQLiteOpenHelper {
         }
         return list;
     }
+
+
 
     public static UserWord GetNext(Context context,TranslateDirection translateDirection) {
        // UserWord Wordt= new UserWord();

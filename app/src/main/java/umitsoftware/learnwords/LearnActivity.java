@@ -9,12 +9,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class LearnActivity extends AppCompatActivity {
 
     private static final String KEY_TRANSLATE_DIRECTION = "TRANSLATE_DIRECTION";
     private UserWordsDB.TranslateDirection translateDirection = UserWordsDB.TranslateDirection.ENRU;
     private Button btnRus,btnEng,btnAnswer;
+    private TextView tvToLearn,tvLearnt;
     private UserWord userWord;
 
     @Override
@@ -25,6 +27,8 @@ public class LearnActivity extends AppCompatActivity {
         btnEng=(Button )findViewById(R.id.btnEnglish);
         btnRus=(Button )findViewById(R.id.btnRussian);
         btnAnswer=(Button )findViewById(R.id.btnAnswer);
+        tvToLearn=(TextView) findViewById(R.id.tvToLearn);
+        tvLearnt=(TextView) findViewById(R.id.tvLearnt);
         if (savedInstanceState != null) {
             translateDirection = savedInstanceState.getInt(KEY_TRANSLATE_DIRECTION, 0)==0?
                     UserWordsDB.TranslateDirection.ENRU: UserWordsDB.TranslateDirection.RUEN;
@@ -44,7 +48,6 @@ public class LearnActivity extends AppCompatActivity {
             } else{
                 btnAnswer.setText("");
             }
-
         }
         else if(translateDirection==UserWordsDB.TranslateDirection.RUEN){
             btnRus.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
@@ -57,8 +60,10 @@ public class LearnActivity extends AppCompatActivity {
             } else{
                 btnAnswer.setText("");
             }
-
         }
+        Stats stats= UserWordsDB.GetStats(getApplicationContext());
+        tvLearnt.setText(Integer.toString(stats.learnt));
+        tvToLearn.setText(Integer.toString(stats.toLearn));
 
     }
 
