@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +19,11 @@ import java.util.Set;
  */
 
 public class UserWordsDB extends SQLiteOpenHelper {
+
+    public enum TranslateDirection {
+        ENRU,
+        RUEN
+    }
 
     private static final String DATABASE_NAME = "UserWordsDB.db";
     private static final String TABLE_NAME = "UsersWords";
@@ -48,10 +55,10 @@ public class UserWordsDB extends SQLiteOpenHelper {
         String SQL_CREATE_USERWORDDB_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + "_ID" + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "ENWORD" + " TEXT NOT NULL, "
-                + "ENTIME" + " TEXT NOT NULL, "
+                + "ENTIME" + " INTEGER NOT NULL, "
                 + "ENCOUNT" + " INTEGER NOT NULL DEFAULT 0, "
                 + "RUWORD" + " TEXT NOT NULL, "
-                + "RUTIME" + " TEXT NOT NULL, "
+                + "RUTIME" + " INTEGER NOT NULL, "
                 + "RUCOUNT" + " INTEGER NOT NULL DEFAULT 0);";
 
         db.execSQL(SQL_CREATE_USERWORDDB_TABLE);
@@ -61,10 +68,13 @@ public class UserWordsDB extends SQLiteOpenHelper {
         UserWordsDB dbOpenHelper = new UserWordsDB(context);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
+
+        /*SimpleDateFormat frmt = new SimpleDateFormat("yyMMddHHmmss");
+        Date date = new Date(System.currentTimeMillis());*/
         cv.put("ENWORD",EnWord);
         cv.put("RUWORD",RuWord);
-        cv.put("RUTIME","00");
-        cv.put("ENTIME","00");
+        cv.put("RUTIME",System.currentTimeMillis()/1000);
+        cv.put("ENTIME",System.currentTimeMillis()/1000);
         db.insert("UsersWords",null,cv);
         db.close();
     }
@@ -132,10 +142,62 @@ public class UserWordsDB extends SQLiteOpenHelper {
         } finally {
             cursor.close();
         }
-
         return list;
+    }
 
+    public static UserWord GetNext(Context context,TranslateDirection translateDirection) {
+       // UserWord Wordt= new UserWord();
+        UserWordsDB dbOpenHelper = new UserWordsDB(context);
+        SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+        UserWord word=null;
+        String[] projection = {
+                "_ID",
+                "ENWORD",
+                "ENCOUNT",
+                "RUWORD",
+                "RUCOUNT"};
 
+        String selection="";
+        String selectionArg="3";
+        String sortOrder="";
+        if(translateDirection==TranslateDirection.ENRU) {
+            selection = "ENCOUNT < ?";
+            sortOrder = "ENTIME ";
+        }
+        else if(translateDirection==TranslateDirection.RUEN){
+            selection = "RUCOUNT < ?";
+            sortOrder = "RUTIME";
+        }else{
+            selection = "ENCOUNT < ?";
+            sortOrder = "ENTIME";
+        }
+
+        Cursor cursor = db.query(
+                TABLE_NAME,
+                projection,
+                selection,
+                new String[]{selectionArg},
+                null,
+                null,
+                sortOrder);
+
+        try {
+            if(cursor.getCount()!=0){
+            cursor.moveToFirst();
+
+            word = new UserWord(
+                    cursor.getInt(cursor.getColumnIndex("_ID")),
+                    cursor.getString(cursor.getColumnIndex("ENWORD")),
+                    cursor.getString(cursor.getColumnIndex("RUWORD")),
+                    cursor.getInt(cursor.getColumnIndex("ENCOUNT")),
+                    cursor.getInt(cursor.getColumnIndex("RUCOUNT"))
+            );
+            }
+
+        } finally {
+            cursor.close();
+        }
+        return word;
     }
 
     @Override

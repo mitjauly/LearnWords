@@ -46,9 +46,9 @@ public class ViewWordsActivity extends AppCompatActivity {
 
 
 
-        textView3=(TextView ) findViewById(R.id.textView3);
+       /* textView3=(TextView ) findViewById(R.id.textView3);
         ArrayList<UserWord> list ;
-        list=UserWordsDB.GetAll(getBaseContext());
+        list=UserWordsDB.GetAll(getBaseContext());*/
      /*   for (UserWord word: list) {
            textView3.append(word.EnWord+" "+word.RuWord);
         }*/

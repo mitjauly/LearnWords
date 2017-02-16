@@ -126,6 +126,31 @@
             android:layout_weight="18">
 
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/btnAnswer"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="60dp"
+                android:layout_marginTop="60dp"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:hint="@string/Addsomewords"
+                android:textStyle="normal|bold"
+                android:textSize="24sp"
+                android:textAllCaps="false" />
+
+            <Button
+                android:text="@string/English"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button5"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:elevation="5dp"
+                android:onClick="btnSwEnglish" />
         </LinearLayout>
 
     </LinearLayout>
@@ -144,20 +169,24 @@
             android:text="@string/English"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button3"
+            android:id="@+id/btnEnglish"
             android:layout_weight="1"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:background="@color/colorAccent"
-            android:textColor="?android:attr/windowBackground"
-            android:elevation="5dp" />
+            android:textColor="@color/white"
+            android:elevation="5dp"
+            android:onClick="btnSwEnglish" />
 
         <Button
             android:text="@string/Russian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button2"
+            android:id="@+id/btnRussian"
             android:layout_weight="1"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:elevation="5dp" />
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
+            android:elevation="5dp"
+            android:onClick="btnSwRussian" />
     </LinearLayout>
 </RelativeLayout>
