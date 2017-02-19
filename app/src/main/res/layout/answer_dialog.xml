@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:text="@string/Correctanswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:paddingLeft="5dp"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <TextView
+        android:text="Str"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRightAnswer"
+        android:textStyle="normal|bold"
+        android:textSize="24sp"
+        android:paddingTop="20dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="5dp"
+        android:layout_width="320dp"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:gravity="center" />
+
+    <TextView
+        android:text="@string/Youguessedright"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView7"
+        android:paddingLeft="5dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:text="@string/Wrong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnWrongAnswer"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:textSize="18sp" />
+
+        <Button
+            android:text="@string/Right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnRightAnswer"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>

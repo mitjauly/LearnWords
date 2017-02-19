@@ -10,4 +10,11 @@
     <string name="Delete">"Delete"</string>
     <string name="translate">"Translate"</string>
     <string name="Addsomewords">"Add some words</string>
+    <string name="Right">"Right"</string>
+    <string name="Wrong">"Wrong"</string>
+    <string name="Youguessedright">"You guessed right?"</string>
+    <string name="Correctanswer">"Correct answer:"</string>
+    <string name="Congratulations">"Excellent work!!! \nYou have learned this word!"</string>
+    <string name="gratsEngLearnt">"Congratulations!!! \nYou have learned that word in English"</string>
+    <string name="gratsRusLearnt">"Congratulations!!! \n"You have learned this word in Russian"</string>
 </resources>

@@ -79,6 +79,28 @@ public class UserWordsDB extends SQLiteOpenHelper {
         db.close();
     }
 
+    public static void RewriteElem(Context context, UserWord userWord,TranslateDirection translateDirection) {
+        UserWordsDB dbOpenHelper = new UserWordsDB(context);
+        SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        /*SimpleDateFormat frmt = new SimpleDateFormat("yyMMddHHmmss");
+        Date date = new Date(System.currentTimeMillis());*/
+       /* cv.put("ENWORD",userWord.EnWord);
+        cv.put("RUWORD",userWord.RuWord);*/
+        if(translateDirection==TranslateDirection.RUEN){
+            cv.put("RUCOUNT",userWord.RuCount);
+            cv.put("RUTIME",System.currentTimeMillis()/1000);
+        } else{
+            cv.put("ENCOUNT",userWord.EnCount);
+            cv.put("ENTIME",System.currentTimeMillis()/1000);
+        }
+
+        db.update(TABLE_NAME, cv, "_id="+userWord.Id, null);
+
+        db.close();
+    }
+
     public static int GetSize(Context context) {
        UserWordsDB dbOpenHelper = new UserWordsDB(context);
         SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
@@ -174,14 +196,10 @@ public class UserWordsDB extends SQLiteOpenHelper {
         String selection="";
         String selectionArg="3";
         String sortOrder="";
-        if(translateDirection==TranslateDirection.ENRU) {
-            selection = "ENCOUNT < ?";
-            sortOrder = "ENTIME ";
-        }
-        else if(translateDirection==TranslateDirection.RUEN){
+        if(translateDirection==TranslateDirection.RUEN){
             selection = "RUCOUNT < ?";
             sortOrder = "RUTIME";
-        }else{
+        } else{
             selection = "ENCOUNT < ?";
             sortOrder = "ENTIME";
         }

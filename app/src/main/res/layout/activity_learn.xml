@@ -138,7 +138,8 @@
                 android:hint="@string/Addsomewords"
                 android:textStyle="normal|bold"
                 android:textSize="24sp"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:onClick="btnAnswer" />
 
             <Button
                 android:text="@string/English"
