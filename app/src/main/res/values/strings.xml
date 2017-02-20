@@ -17,4 +17,6 @@
     <string name="Congratulations">"Excellent work!!! \nYou have learned this word!"</string>
     <string name="gratsEngLearnt">"Congratulations!!! \nYou have learned that word in English"</string>
     <string name="gratsRusLearnt">"Congratulations!!! \n"You have learned this word in Russian"</string>
+    <string name="TraslationError">"An error occurred during the translation"</string>
 </resources>
+

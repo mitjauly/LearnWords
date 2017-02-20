@@ -16,11 +16,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import static android.support.v7.widget.LinearLayoutManager.HORIZONTAL;
 import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
 
-public class AddWordActivity extends AppCompatActivity {
+public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandxResponse {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter addAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -35,8 +36,6 @@ public class AddWordActivity extends AppCompatActivity {
         // Action Bar
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);//Back to main button
-
-
         editTextEW=(EditText ) findViewById(R.id.editTextEngWord);
         editTextRW=(EditText ) findViewById(R.id.editTextRusWord);
 
@@ -85,8 +84,34 @@ public class AddWordActivity extends AppCompatActivity {
         UserWordsDB.AddElem(this,editTextEW.getText().toString(),editTextRW.getText().toString());
         editTextEW.setText("");
         editTextRW.setText("");
+    }
 
+    @Override
+    public void showTranslResult(String translResult,UserWordsDB.TranslateDirection translateDirection) {
+        if(translateDirection!=null){
+            if(translateDirection== UserWordsDB.TranslateDirection.RUEN){
+                editTextEW.setText(translResult);
+            } else{
+                editTextRW.setText(translResult);
+            }
+        } else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                                         getResources().getString(R.string.TraslationError)+
+                                         "( "+translResult+" )"   ,
+                                         Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 
-      // text
+    public void btnTranslate(View view) {
+        YaTrans yaTrans=new YaTrans();
+        yaTrans.delegate=this;
+
+        if((editTextRW.length()!=0)&&(editTextEW.length()==0)){
+            yaTrans.execute(editTextRW.getText().toString(),"ru-en");
+        }else{
+            yaTrans.execute(editTextEW.getText().toString(),"en-ru");
+        }
+
     }
 }

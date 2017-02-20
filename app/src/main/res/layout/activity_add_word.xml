@@ -46,12 +46,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="5"
-                        android:paddingTop="10dp"
+                        android:paddingTop="5dp"
                         android:text="@string/English"
 
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:paddingBottom="5dp" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -59,12 +60,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="5"
-                        android:paddingTop="10dp"
+                        android:paddingTop="5dp"
 
                         android:text="@string/Russian"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:paddingBottom="5dp" />
 
                 </LinearLayout>
 
@@ -79,27 +81,37 @@
                         style="@android:style/Widget.Holo.EditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5"
+                        android:layout_weight="10"
                         android:ems="10"
-                        android:hint="@string/hintEnterE"
                         android:inputType="textPersonName"
                         android:textAlignment="textStart"
-                        android:textColor="@android:color/white"
+                        android:layout_gravity="start"
+                        android:textColor="@android:color/black"
                         android:textSize="16sp"
-                        android:textStyle="normal|bold" />
+                        android:textStyle="normal|bold"
+                        android:hint="@string/hintEnterE"
+                        android:background="@color/cardview_light_background"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginBottom="2dp" />
 
                     <EditText
                         android:id="@+id/editTextRusWord"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="13"
+                        android:layout_weight="10"
                         android:ems="10"
-                        android:hint="@string/hintEnterR"
                         android:inputType="textPersonName"
                         android:textAlignment="textStart"
-                        android:textColor="@android:color/white"
+                        android:layout_gravity="start"
+                        android:textColor="@android:color/black"
                         android:textSize="16sp"
-                        android:textStyle="normal|bold" />
+                        android:textStyle="normal|bold"
+                        android:hint="@string/hintEnterR"
+                        android:background="@color/cardview_light_background"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="2dp"
+                        android:layout_marginTop="2dp" />
 
                 </LinearLayout>
 
@@ -133,9 +145,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/translate"
+                    android:layout_gravity="start"
                     android:textAlignment="textStart"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    android:onClick="btnTranslate" />
 
                 <Button
                     android:id="@+id/button6"
@@ -144,6 +158,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/add"
+                    android:layout_gravity="end"
                     android:textAlignment="textEnd"
                     android:textColor="@color/white"
                     android:textSize="24sp"
