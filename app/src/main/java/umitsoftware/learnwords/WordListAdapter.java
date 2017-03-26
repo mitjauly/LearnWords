@@ -106,7 +106,10 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
                 }
                 else
                 {
-                    ll.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+                    if(list.get(pos).EnCount > 2 && list.get(pos).RuCount > 2)
+                        ll.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+                    else
+                        ll.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
                     selectedItems.remove(id);
                     selectedItemsEngWords.remove(engWord.getText().toString());
                 }

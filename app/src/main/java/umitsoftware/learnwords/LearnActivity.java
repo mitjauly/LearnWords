@@ -1,9 +1,11 @@
 package umitsoftware.learnwords;
 
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,12 +31,14 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
     private TextView tvToLearn,tvLearnt;
     private UserWord userWord;
     DialogFragment answerDialog;
+    DialogFragment helpDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn);
-        answerDialog=new AnswerDialog();
+        answerDialog = new AnswerDialog();
+        helpDialog = new HelpDialog();
         btnEng=(Button )findViewById(R.id.btnEnglish);
         btnRus=(Button )findViewById(R.id.btnRussian);
         btnAnswer=(Button )findViewById(R.id.btnAnswer);
@@ -105,6 +109,10 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
                 startActivity(intent);
                 return true;
             case R.id.menuHelp:
+                Bundle args = new Bundle();
+                args.putString("str", getResources().getString(R.string.HelpMain));
+                helpDialog.setArguments(args);
+                helpDialog.show(getFragmentManager(), "TAG");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -124,7 +132,7 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
     public void btnAnswer(View view) {
         if (btnAnswer.getText().length() > 0) {
             Bundle args = new Bundle();
-            args.putString("str", userWord.EnWord+" = "+userWord.RuWord);
+            args.putString("str", userWord.EnWord + " = " + userWord.RuWord);
             answerDialog.setArguments(args);
             answerDialog.show(getFragmentManager(), "TAG");
         }

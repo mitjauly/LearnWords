@@ -1,5 +1,6 @@
 package umitsoftware.learnwords;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,11 +28,13 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
     private RecyclerView.LayoutManager mLayoutManager;
     private EditText editTextEW;
     private EditText editTextRW;
+    DialogFragment helpDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_word);
+        helpDialog = new HelpDialog();
 
         // Action Bar
         ActionBar ab = getSupportActionBar();
@@ -65,6 +68,10 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
                 startActivity(intent);
                 return true;
             case R.id.menuHelp:
+                Bundle args = new Bundle();
+                args.putString("str", getResources().getString(R.string.HelpAdd));
+                helpDialog.setArguments(args);
+                helpDialog.show(getFragmentManager(), "TAG");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

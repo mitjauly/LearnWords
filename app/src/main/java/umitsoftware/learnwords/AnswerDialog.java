@@ -32,7 +32,7 @@ public class AnswerDialog extends DialogFragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle("Title!");
+        getDialog().setTitle("Answer!");
 
         View v = inflater.inflate(R.layout.answer_dialog, null);
         btnWrongAnswer=(Button)v.findViewById(R.id.btnWrongAnswer);

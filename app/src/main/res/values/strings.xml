@@ -25,5 +25,9 @@
     <string name="DeleteConfirmation">"This will delete selected items. Continue?"</string>
     <string name="PurgeAll">"Remove all user data and restore default state?"</string>
     <string name="Purge">"Purge"</string>
+    <string name="Close">"Close"</string>
+    <string name="HelpMain">"\tWelcome to Learning Word Program!\n\n\tAt first you need to add words to your list, use Plus button to do so. After that you can answer by clicking on middle of the screen.\n\n\tI wanted this program to be simple and fast to use so I didn't add any check and you should have self control to have profit from it.\n\n\tAfter 3 right answers on both languages word will be moved to learnt. You can manage your words on list page.\n\n\tBest results can be achieved by checking all words on both languages one time every day.\n\n\tGood Luck!\n\n"</string>
+    <string name="HelpList">"\tHere you can check your words, delete some of them or delete everything by Purging Database.\n\n\t Be careful to Purge, it will remove all progress.\n\n"</string>
+    <string name="HelpAdd">"\tHere you can add new words to your list.\n\n\tYou can add words manually by typing word and translation for it or get translation through internet.\n\n\tAlso you can use suggested words below.\n\n"</string>
 </resources>
 
