@@ -16,46 +16,29 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 /**
- * Created by User on 2/20/2017.
+ * Created by umitsoftware on 2/20/2017.
  */
 
 public class DictionaryWordsDB extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "FrUsedWordsDB.sqlite";
     private static final String TABLE_NAME = "FrUsedWords";
-    public static final int SHOW_NUMBER = 478;
-
+    public static final int SHOW_NUMBER = 478; // TODO: change o dinamic zise
 
     public DictionaryWordsDB(Context context) {
         super(context, DATABASE_NAME, null, 1);
         if(!checkDB(context)){
             try {
                 copyDB(context);
-
             } catch (IOException e) {
                 Log.i("DB","Erron on coppy DB");
                 throw new Error("Error copying database ");
-
             }
-
         }
-
     }
 
+    //Data base exist?
     private boolean checkDB(Context context){
-       /* SQLiteDatabase chkDB=null;
-        try {
-            chkDB = SQLiteDatabase.openDatabase(GetPath(context)+DATABASE_NAME, null, SQLiteDatabase.OPEN_READONLY);
-            //chkDBdisk = SQLiteDatabase.openDatabase(mContext.getAssets().open(DB_NAME));
-        } catch (SQLiteException e) {
-            Log.i("DB", " doesn't exist");//база еще не существует
-        }
-        if (chkDB != null) {
-            chkDB.close();
-            return true;
-        }
-        return false;*/
         File dbFile = new File(getPath(context) + DATABASE_NAME);
-        //Log.v("dbFile", dbFile + "   "+ dbFile.exists());
         Log.i("DB exists?",Boolean.toString(dbFile.exists()));
         Log.v("dbFile", dbFile + "   "+ dbFile.exists());
         return dbFile.exists();
@@ -73,10 +56,8 @@ public class DictionaryWordsDB extends SQLiteOpenHelper {
         return DB_PATH;
     }
 
-
     private void copyDB(Context context) throws IOException {
-        //Открываем локальную БД как входящий поток
-        //String DB_PATH=GetPath(context);
+        //Local base opening
 
         InputStream myInput = context.getAssets().open(DATABASE_NAME);
         Log.v("myInput", myInput + "   ");
@@ -84,22 +65,18 @@ public class DictionaryWordsDB extends SQLiteOpenHelper {
         Log.i("DB","we here");
         Log.v("myOutput", myOutput + "   ");
 
-
-        //перемещаем байты из входящего файла в исходящий
+        //moving data to new databse
         byte[] buffer = new byte[4096];
         int length;
         while ((length = myInput.read(buffer)) > 0) {
             myOutput.write(buffer, 0, length);
         }
 
-        //закрываем потоки
+        //close  stream
         myOutput.flush();
         myOutput.close();
         myInput.close();
     }
-
-
-
 
     public static ArrayList<UserWord> GetSuggestion(Context context) {
         ArrayList<UserWord> list = new ArrayList<UserWord>();
@@ -111,17 +88,12 @@ public class DictionaryWordsDB extends SQLiteOpenHelper {
                 "RUWORD",
                 "ST"
         };
-        //String orderBy="";//"RANDOM() LIMIT "+Integer.toString(SHOW_NUMBER);
-        String selection="ST IS NULL OR ST = ?";
-        String selectionArg="0";
 
         Cursor cursor = db.query(
                 TABLE_NAME,
                 projection,
                 null,
                 null,
-                //selection,
-                //new String[]{selectionArg},
                 null,
                 null,
                 null);
@@ -155,16 +127,14 @@ public class DictionaryWordsDB extends SQLiteOpenHelper {
         return  cnt;
     }
 
+    // Marking just added to User DB words
     public static void MarkAdded(Context context, String engWord) {
         DictionaryWordsDB dbOpenHelper = new DictionaryWordsDB(context);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("ST",1);
-
-        db.update(TABLE_NAME, cv, "ENWORD = ?" ,new String[] { engWord });
-
+        cv.put("ST", 1);
+        db.update(TABLE_NAME, cv, "ENWORD = ?", new String[] { engWord });
         db.close();
-
     }
 
     public static void PurgeData(Context context) {
@@ -172,38 +142,27 @@ public class DictionaryWordsDB extends SQLiteOpenHelper {
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("ST",0);
-
         db.update(TABLE_NAME, cv, null, null );
-
         db.close();
-
     }
 
+    // Unmarking words in sujestion DB when deleting items in User DB
     public static void UnmarkDeleted(Context context, String engWord) {
         Log.i("lissssst index",engWord);
-
         DictionaryWordsDB dbOpenHelper = new DictionaryWordsDB(context);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("ST", 0);
-
         db.update(TABLE_NAME, cv, "ENWORD = ?" ,new String[] { engWord });
-
         db.close();
-
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-     //   SQLiteDatabase chkDB = null;
-
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
     public synchronized void close()

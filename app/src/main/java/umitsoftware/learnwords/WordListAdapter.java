@@ -26,32 +26,14 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
  context=cntext;
     }
 
-
-    public void unmarkDeleted(){
-
-
-        //new DeleteSelected().execute(context,selectedItems);
-
-
-
-    }
-
     public void clearSelected(){
 
         for (String selectedItem: selectedItemsEngWords)
         {
-
-            //list.clear();
-
             DictionaryWordsDB.UnmarkDeleted(context, selectedItem);
         }
-        //new DeleteSelected().execute(context,selectedItems);
       UserWordsDB.DeletePositions(context, selectedItems);
-     //   this.notifyDataSetChanged();
-
     }
-
-
 
     @Override
     public WordListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -59,8 +41,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
         selectedItems=new HashSet<>();
         selectedItemsEngWords=new HashSet<>();
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listword_card,parent,false));
-
-
     }
 
     @Override
@@ -78,9 +58,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
         if((list.get(position).EnCount>2)&&(list.get(position).RuCount>2)) {
             holder.ll.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
         }
-        /*if(holder.selected) holder.engStar1.setVisibility(View.VISIBLE);
-        else holder.engStar1.setVisibility(View.INVISIBLE);*/
-        //list[position].
     }
 
     @Override
@@ -89,7 +66,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
         return UserWordsDB.GetSize(context);
 
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView engWord;
@@ -134,13 +110,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
                     selectedItems.remove(id);
                     selectedItemsEngWords.remove(engWord.getText().toString());
                 }
-
-                //engWord.setText(Integer.toString(id));
-                //ll.setBackgroundColor(Color.BLACK);
             }
         });
-
         }
-
     }
 }

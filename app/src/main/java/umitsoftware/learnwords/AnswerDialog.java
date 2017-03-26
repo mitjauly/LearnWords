@@ -15,28 +15,19 @@ import android.widget.Button;
 import android.widget.TextView;
 
 /**
- * Created by User on 2/19/2017.
+ * Created by umitsoftware on 2/19/2017.
  */
 
 public class AnswerDialog extends DialogFragment implements View.OnClickListener {
 
-    private String rightAnswer;
     private Button btnWrongAnswer,btnRightAnswer;
     private TextView tvRightAnswer;
     private iAnswer mListener;
-
-
 
     public static interface iAnswer {
         public void onRight();
         public void onWrong();
     }
-
-    /*@Override
-    public void onAttach(Activity activity) {
-        mListener = (iAnswer) activity;
-        super.onAttach(activity);
-    }*/
 
     @Nullable
     @Override
@@ -54,11 +45,6 @@ public class AnswerDialog extends DialogFragment implements View.OnClickListener
 
         Bundle mArgs = getArguments();
         tvRightAnswer.setText(mArgs.getString("str"));
-       // mListener = (iAnswer) Activity;
-
-        //String rightAnswer = mArgs.getString("str");
-
-       // getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return v;
 
     }
@@ -66,19 +52,12 @@ public class AnswerDialog extends DialogFragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-
         super.onDismiss(dialog);
-
-
     }
-
-
 
     @Override
     public void onClick(View v) {
@@ -87,15 +66,12 @@ public class AnswerDialog extends DialogFragment implements View.OnClickListener
             if(activity instanceof iAnswer)
                 ((iAnswer)activity).onRight();
             this.dismiss();
-
         }
-
         if(((Button )v).getId()==btnWrongAnswer.getId()){
             Activity activity = getActivity();
             if(activity instanceof iAnswer)
                 ((iAnswer)activity).onWrong();
             this.dismiss();
         }
-
     }
 }

@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 
 public class ViewWordsActivity extends AppCompatActivity {
-    private TextView textView3;
     private RecyclerView mRecyclerView;
     private WordListAdapter wordListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -41,25 +40,9 @@ public class ViewWordsActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        Context aa=getBaseContext();
-
         wordListAdapter = new WordListAdapter(getApplicationContext());
-
         mRecyclerView.setAdapter(wordListAdapter);
-
-
-
-       /* textView3=(TextView ) findViewById(R.id.textView3);
-        ArrayList<UserWord> list ;
-        list=UserWordsDB.GetAll(getBaseContext());*/
-     /*   for (UserWord word: list) {
-           textView3.append(word.EnWord+" "+word.RuWord);
-        }*/
-
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,16 +57,13 @@ public class ViewWordsActivity extends AppCompatActivity {
                 .setMessage(R.string.DeleteConfirmation)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Toast.makeText(getApplicationContext(), R.string.Deleted, Toast.LENGTH_SHORT).show();
                         new DeleteSelected().execute();
 
                     }})
                 .setNegativeButton(R.string.no, null).show();
-
     }
-
 
     public void purgeButtonClick(View view) {
         new AlertDialog.Builder(this)
@@ -91,14 +71,12 @@ public class ViewWordsActivity extends AppCompatActivity {
                 .setMessage(R.string.PurgeAll)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Toast.makeText(getApplicationContext(), R.string.Deleted, Toast.LENGTH_SHORT).show();
                         new PurgeAll().execute();
 
                     }})
                 .setNegativeButton(R.string.no, null).show();
-
     }
 
     private class DeleteSelected extends AsyncTask {
@@ -113,7 +91,6 @@ public class ViewWordsActivity extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             finish();
             startActivity(getIntent());
-            //wordListAdapter.notifyDataSetChanged();
             super.onPostExecute(o);
         }
     }

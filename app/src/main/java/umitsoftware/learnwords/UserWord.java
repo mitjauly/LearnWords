@@ -1,7 +1,7 @@
 package umitsoftware.learnwords;
 
 /**
- * Created by User on 1/31/2017.
+ * Created by umitsoftware on 1/31/2017.
  */
 public class UserWord {
     public int Id;
@@ -15,8 +15,5 @@ public class UserWord {
         EnWord=enword;
         RuCount=rucount;
         EnCount=encount;
-
     }
-
-
 }

@@ -17,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Created by umitsoftware on 2/19/2017.
+ */
+
 public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAnswer {
 
     private static final String KEY_TRANSLATE_DIRECTION = "TRANSLATE_DIRECTION";
@@ -72,7 +76,6 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
         Stats stats= UserWordsDB.GetStats(getApplicationContext());
         tvLearnt.setText(Integer.toString(stats.learnt));
         tvToLearn.setText(Integer.toString(stats.toLearn));
-
     }
 
     @Override
@@ -83,11 +86,9 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.main_menu, menu);
             return true;
-
     }
 
     @Override
@@ -104,13 +105,10 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
                 startActivity(intent);
                 return true;
             case R.id.menuHelp:
-
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     public void btnSwRussian(View view) {
@@ -124,16 +122,12 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
     }
 
     public void btnAnswer(View view) {
-        Bundle args = new Bundle();
-        args.putString("str", userWord.EnWord+" = "+userWord.RuWord);
-        answerDialog.setArguments(args);
-      //  answerDialog.settar(this,0);
-        answerDialog.show(getFragmentManager(), "TAG");
-
-
-
-        //answerDialog.show(getFragmentManager(), "Answer");
-
+        if (btnAnswer.getText().length() > 0) {
+            Bundle args = new Bundle();
+            args.putString("str", userWord.EnWord+" = "+userWord.RuWord);
+            answerDialog.setArguments(args);
+            answerDialog.show(getFragmentManager(), "TAG");
+        }
     }
 
     //shows Statistic of answered word
@@ -161,11 +155,9 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
         Toast toast=new Toast(getApplicationContext());
         toast.setView(layout);
         toast.show();
-
     }
 
-
-
+    // Right answer given
     @Override
     public void onRight() {
         if(translateDirection==UserWordsDB.TranslateDirection.ENRU) {
@@ -190,10 +182,6 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
         }
 
         ShowUpdatedData();
-
-
-       /* Toast toast = Toast.makeText(getApplicationContext(), "Congrats", Toast.LENGTH_SHORT);
-        toast.show();*/
     }
 
     @Override

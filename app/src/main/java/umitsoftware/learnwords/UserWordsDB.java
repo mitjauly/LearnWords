@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by User on 1/31/2017.
+ * Created by umitsoftware on 1/31/2017.
  */
 
 public class UserWordsDB extends SQLiteOpenHelper {
@@ -27,24 +27,6 @@ public class UserWordsDB extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserWordsDB.db";
     private static final String TABLE_NAME = "UsersWords";
-
-
-  /*  public static final class WordColumns implements BaseColumns {
-        public final static String TABLE_NAME = "UsersWords";
-
-        public final static String _ID = BaseColumns._ID;
-        public final static String COLUMNRUWORD = "RU";
-        public final static String COLUMNENWORD = "name";
-        public final static String COLUMNENCOUNT = "name";
-        public final static String COLUMNRUCOUNT = "name";
-        public final static String COLUMNRUTIME = "name";
-        public final static String COLUMNENTIME = "name";
-
-        public static final int GENDER_FEMALE = 0;
-        public static final int GENDER_FEMALE = 0;
-        public static final int GENDER_MALE = 1;
-        public static final int GENDER_UNKNOWN = 2;
-    }*/
 
     public UserWordsDB(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -68,9 +50,6 @@ public class UserWordsDB extends SQLiteOpenHelper {
         UserWordsDB dbOpenHelper = new UserWordsDB(context);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
-
-        /*SimpleDateFormat frmt = new SimpleDateFormat("yyMMddHHmmss");
-        Date date = new Date(System.currentTimeMillis());*/
         cv.put("ENWORD",EnWord);
         cv.put("RUWORD",RuWord);
         cv.put("RUTIME",System.currentTimeMillis()/1000);
@@ -79,25 +58,20 @@ public class UserWordsDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public static void RewriteElem(Context context, UserWord userWord,TranslateDirection translateDirection) {
+    public static void RewriteElem(Context context, UserWord userWord, TranslateDirection translateDirection) {
         UserWordsDB dbOpenHelper = new UserWordsDB(context);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        /*SimpleDateFormat frmt = new SimpleDateFormat("yyMMddHHmmss");
-        Date date = new Date(System.currentTimeMillis());*/
-       /* cv.put("ENWORD",userWord.EnWord);
-        cv.put("RUWORD",userWord.RuWord);*/
         if(translateDirection==TranslateDirection.RUEN){
-            cv.put("RUCOUNT",userWord.RuCount);
-            cv.put("RUTIME",System.currentTimeMillis()/1000);
+            cv.put("RUCOUNT", userWord.RuCount);
+            cv.put("RUTIME", System.currentTimeMillis()/1000);
         } else{
-            cv.put("ENCOUNT",userWord.EnCount);
-            cv.put("ENTIME",System.currentTimeMillis()/1000);
+            cv.put("ENCOUNT", userWord.EnCount);
+            cv.put("ENTIME", System.currentTimeMillis()/1000);
         }
 
         db.update(TABLE_NAME, cv, "_id="+userWord.Id, null);
-
         db.close();
     }
 
@@ -116,16 +90,15 @@ public class UserWordsDB extends SQLiteOpenHelper {
         SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
         Cursor cursorAll = db.rawQuery( "SELECT  * FROM " + TABLE_NAME , null);
         Cursor cursorLeant = db.rawQuery( "SELECT  * FROM " + TABLE_NAME + " WHERE RUCOUNT > 2 AND ENCOUNT > 2", null);
-        Stats result=new Stats(cursorLeant.getCount(),cursorAll.getCount()-cursorLeant.getCount());
+        Stats result=new Stats(cursorLeant.getCount(), cursorAll.getCount()-cursorLeant.getCount());
         cursorAll.close();
         cursorLeant.close();
         db.close();
         return  result;
     }
 
-    // Delets all DB(for testing purposes)
+    // Delets all DB
     public static void PurgeDB(Context context) {
-
         UserWordsDB dbOpenHelper = new UserWordsDB(context);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         db.delete(TABLE_NAME, null, null);
@@ -161,7 +134,7 @@ public class UserWordsDB extends SQLiteOpenHelper {
                 null,
                 null,
                 null,
-                null);
+                "ENCOUNT ASC, RUCOUNT ASC");
 
         try{
         while (cursor.moveToNext()) {
@@ -181,8 +154,7 @@ public class UserWordsDB extends SQLiteOpenHelper {
 
 
 
-    public static UserWord GetNext(Context context,TranslateDirection translateDirection) {
-       // UserWord Wordt= new UserWord();
+    public static UserWord GetNext(Context context, TranslateDirection translateDirection) {
         UserWordsDB dbOpenHelper = new UserWordsDB(context);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         UserWord word=null;
@@ -192,7 +164,6 @@ public class UserWordsDB extends SQLiteOpenHelper {
                 "ENCOUNT",
                 "RUWORD",
                 "RUCOUNT"};
-
         String selection="";
         String selectionArg="3";
         String sortOrder="";
@@ -212,7 +183,6 @@ public class UserWordsDB extends SQLiteOpenHelper {
                 null,
                 null,
                 sortOrder);
-
         try {
             if(cursor.getCount()!=0){
             cursor.moveToFirst();

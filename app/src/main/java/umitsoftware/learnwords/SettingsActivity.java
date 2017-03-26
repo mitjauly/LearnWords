@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    // Not used now
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

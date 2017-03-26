@@ -1,10 +1,6 @@
 package umitsoftware.learnwords;
 
-import android.app.Application;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -12,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -22,8 +17,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static android.support.v7.widget.LinearLayoutManager.HORIZONTAL;
-import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
+/**
+ * Created by umitsoftware on 2/19/2017.
+ */
 
 public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandxResponse, AddAdapter.iWordSuggested {
     private RecyclerView mRecyclerView;
@@ -31,8 +27,6 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
     private RecyclerView.LayoutManager mLayoutManager;
     private EditText editTextEW;
     private EditText editTextRW;
-    public int lastAdded;
-    //private AddAdapter addAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +35,7 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
 
         // Action Bar
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);//Back to main button
+        ab.setDisplayHomeAsUpEnabled(true); //Back to main button
         editTextEW=(EditText ) findViewById(R.id.editTextEngWord);
         editTextRW=(EditText ) findViewById(R.id.editTextRusWord);
 
@@ -49,7 +43,6 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
         mRecyclerView = (RecyclerView) findViewById(R.id.rwResentWords);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(this,3);
-        //mLayoutManager = new LinearLayoutManager(this,HORIZONTAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         addAdapter = new AddAdapter(this.getApplicationContext(),this);
         mRecyclerView.setAdapter(addAdapter);
@@ -72,9 +65,7 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
                 startActivity(intent);
                 return true;
             case R.id.menuHelp:
-
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -91,8 +82,7 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
         String engWord=editTextEW.getText().toString();
         String rusWord=editTextRW.getText().toString();
         Log.i(rusWord,engWord);
-        if(engWord.length()>0&&rusWord.length()>0) {
-
+        if(engWord.length() > 0 && rusWord.length() > 0) {
             UserWordsDB.AddElem(this,engWord, rusWord);
             Toast toast = Toast.makeText(getApplicationContext(),
                     getResources().getString(R.string.Added) +
@@ -100,14 +90,9 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
                             rusWord,
                     Toast.LENGTH_SHORT);
             toast.show();
-            /*DictionaryWordsDB.MarkAdded(getApplicationContext(),engWord);
-            addAdapter.notifyDataSetChanged();*/
             new UpdateCards(engWord).execute();
             editTextEW.setText("");
             editTextRW.setText("");
-
-            //startActivity(getIntent());
-
         }
     }
 
@@ -115,13 +100,11 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
         String engWord;
         private UpdateCards(String engWord){
             this.engWord=engWord;
-
         }
 
         @Override
         protected Object doInBackground(Object[] params) {
             DictionaryWordsDB.MarkAdded(getApplicationContext(),engWord);
-
             return null;
         }
 
@@ -134,9 +117,7 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
                     mRecyclerView.invalidate();
                     addAdapter.notifyDataSetChanged();
                 }
-            }, 200);
-
-
+            }, 300);
             super.onPostExecute(o);
         }
     }
@@ -164,10 +145,10 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
 
         if((editTextRW.length()!=0)&&(editTextEW.length()==0)){
             yaTrans.execute(editTextRW.getText().toString(),"ru-en");
-        }else{
+        }
+        else{
             yaTrans.execute(editTextEW.getText().toString(),"en-ru");
         }
-
     }
 
     @Override
