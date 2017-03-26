@@ -23,7 +23,7 @@
             android:layout_weight="10">
 
             <TextView
-                android:id="@+id/engWordC"
+                android:id="@+id/engWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -77,7 +77,7 @@
             android:weightSum="20">
 
             <TextView
-                android:id="@+id/rusWordC"
+                android:id="@+id/rusWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

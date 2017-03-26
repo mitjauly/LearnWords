@@ -6,11 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,12 +25,14 @@ import android.widget.Toast;
 import static android.support.v7.widget.LinearLayoutManager.HORIZONTAL;
 import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
 
-public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandxResponse {
+public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandxResponse, AddAdapter.iWordSuggested {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter addAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private EditText editTextEW;
     private EditText editTextRW;
+    public int lastAdded;
+    //private AddAdapter addAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +48,10 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
         // list of recently added words
         mRecyclerView = (RecyclerView) findViewById(R.id.rwResentWords);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this,HORIZONTAL,false);
+        mLayoutManager = new GridLayoutManager(this,3);
+        //mLayoutManager = new LinearLayoutManager(this,HORIZONTAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        addAdapter = new AddAdapter();
+        addAdapter = new AddAdapter(this.getApplicationContext(),this);
         mRecyclerView.setAdapter(addAdapter);
     }
 
@@ -81,9 +88,57 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
     }
 
     public void AddWord(View view) {
-        UserWordsDB.AddElem(this,editTextEW.getText().toString(),editTextRW.getText().toString());
-        editTextEW.setText("");
-        editTextRW.setText("");
+        String engWord=editTextEW.getText().toString();
+        String rusWord=editTextRW.getText().toString();
+        Log.i(rusWord,engWord);
+        if(engWord.length()>0&&rusWord.length()>0) {
+
+            UserWordsDB.AddElem(this,engWord, rusWord);
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    getResources().getString(R.string.Added) +
+                            engWord + " = " +
+                            rusWord,
+                    Toast.LENGTH_SHORT);
+            toast.show();
+            /*DictionaryWordsDB.MarkAdded(getApplicationContext(),engWord);
+            addAdapter.notifyDataSetChanged();*/
+            new UpdateCards(engWord).execute();
+            editTextEW.setText("");
+            editTextRW.setText("");
+
+            //startActivity(getIntent());
+
+        }
+    }
+
+    private class UpdateCards extends AsyncTask {
+        String engWord;
+        private UpdateCards(String engWord){
+            this.engWord=engWord;
+
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            DictionaryWordsDB.MarkAdded(getApplicationContext(),engWord);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerView.invalidate();
+                    addAdapter.notifyDataSetChanged();
+                }
+            }, 200);
+
+
+            super.onPostExecute(o);
+        }
     }
 
     @Override
@@ -113,5 +168,11 @@ public class AddWordActivity extends AppCompatActivity implements YaTrans.iYandx
             yaTrans.execute(editTextEW.getText().toString(),"en-ru");
         }
 
+    }
+
+    @Override
+    public void suggestWord(UserWord userWord) {
+            editTextEW.setText(userWord.EnWord);
+            editTextRW.setText(userWord.RuWord);
     }
 }

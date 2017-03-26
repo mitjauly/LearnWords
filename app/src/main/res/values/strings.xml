@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">"Learning "</string>
+    <string name="app_name">"Learning"</string>
+    <string name="yes">"Yes"</string>
+    <string name="no">"No"</string>
     <string name="tolearn">"To learn:"</string>
     <string name="learnt">"Learnt: "</string>
     <string name="English">"English"</string>
@@ -8,15 +10,22 @@
     <string name="hintEnterR">"Enter translation or use Yandex translator "</string>
     <string name="add">"Add"</string>
     <string name="Delete">"Delete"</string>
+    <string name="Deleted">"Deleted"</string>
     <string name="translate">"Translate"</string>
     <string name="Addsomewords">"Add some words</string>
     <string name="Right">"Right"</string>
     <string name="Wrong">"Wrong"</string>
+    <string name="Added">"Added: "</string>
     <string name="Youguessedright">"You guessed right?"</string>
     <string name="Correctanswer">"Correct answer:"</string>
     <string name="Congratulations">"Excellent work!!! \nYou have learned this word!"</string>
     <string name="gratsEngLearnt">"Congratulations!!! \nYou have learned that word in English"</string>
     <string name="gratsRusLearnt">"Congratulations!!! \n"You have learned this word in Russian"</string>
     <string name="TraslationError">"An error occurred during the translation"</string>
+    <string name="DeleteConfirmation">"This will delete selected items. Continue?"</string>
+    <string name="PurgeAll">"Remove all user data and restore default state?"</string>
+    <string name="Purge">"Purge"</string>
+
+
 </resources>
 

@@ -1,6 +1,5 @@
 package umitsoftware.learnwords;
 
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -143,8 +141,8 @@ public class LearnActivity extends AppCompatActivity implements AnswerDialog.iAn
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.listword_card, (ViewGroup) findViewById(R.id.ll));
         layout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-        TextView engWord=(TextView)layout.findViewById(R.id.engWordC);
-        TextView rusWord=(TextView)layout.findViewById(R.id.rusWordC);
+        TextView engWord=(TextView)layout.findViewById(R.id.engWord);
+        TextView rusWord=(TextView)layout.findViewById(R.id.rusWord);
         ImageView engStar1=(ImageView)layout.findViewById(R.id.ivStarEng1);
         ImageView engStar2=(ImageView)layout.findViewById(R.id.ivStarEng2);
         ImageView engStar3=(ImageView)layout.findViewById(R.id.ivStarEng3);

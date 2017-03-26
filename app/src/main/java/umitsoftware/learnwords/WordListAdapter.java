@@ -1,40 +1,50 @@
 package umitsoftware.learnwords;
 
-import android.app.Application;
-import android.content.ClipData;
 import android.content.Context;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.DragEvent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.content.Context;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHolder> {
     private  Context context;
     private ArrayList<UserWord> list;
     public Set<Integer> selectedItems;
+    public Set<String> selectedItemsEngWords;
 
     public  WordListAdapter(Context cntext){
  context=cntext;
     }
 
+
+    public void unmarkDeleted(){
+
+
+        //new DeleteSelected().execute(context,selectedItems);
+
+
+
+    }
+
     public void clearSelected(){
 
+        for (String selectedItem: selectedItemsEngWords)
+        {
 
+            //list.clear();
+
+            DictionaryWordsDB.UnmarkDeleted(context, selectedItem);
+        }
         //new DeleteSelected().execute(context,selectedItems);
       UserWordsDB.DeletePositions(context, selectedItems);
      //   this.notifyDataSetChanged();
@@ -47,6 +57,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
     public WordListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         list=UserWordsDB.GetAll(context);
         selectedItems=new HashSet<>();
+        selectedItemsEngWords=new HashSet<>();
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listword_card,parent,false));
 
 
@@ -98,8 +109,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
 
         super(itemView);
 
-        engWord=(TextView)itemView.findViewById(R.id.engWordC);
-        rusWord=(TextView)itemView.findViewById(R.id.rusWordC);
+        engWord=(TextView)itemView.findViewById(R.id.engWord);
+        rusWord=(TextView)itemView.findViewById(R.id.rusWord);
         engStar1=(ImageView)itemView.findViewById(R.id.ivStarEng1);
         engStar2=(ImageView)itemView.findViewById(R.id.ivStarEng2);
         engStar3=(ImageView)itemView.findViewById(R.id.ivStarEng3);
@@ -115,11 +126,13 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
                 if(selected) {
                     ll.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
                     selectedItems.add(id);
+                    selectedItemsEngWords.add(engWord.getText().toString());
                 }
                 else
                 {
                     ll.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
                     selectedItems.remove(id);
+                    selectedItemsEngWords.remove(engWord.getText().toString());
                 }
 
                 //engWord.setText(Integer.toString(id));

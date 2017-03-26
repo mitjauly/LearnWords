@@ -26,6 +26,7 @@ public class AnswerDialog extends DialogFragment implements View.OnClickListener
     private iAnswer mListener;
 
 
+
     public static interface iAnswer {
         public void onRight();
         public void onWrong();

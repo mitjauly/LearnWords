@@ -28,19 +28,41 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
 
-            <Button
-                android:text="@string/Delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/button"
-                android:onClick="purgeButtonClick"
-                android:layout_weight="3"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+                <Button
+                    android:text="@string/Purge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/button2"
+                    android:onClick="purgeButtonClick"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+
+                <Button
+                    android:text="@string/Delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/button"
+                    android:onClick="deleteButtonClick"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:background="@color/colorPrimary"
+                    android:visibility="visible"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 
