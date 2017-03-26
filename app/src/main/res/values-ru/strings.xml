@@ -1,3 +1,28 @@
 <resources>
-    <string name="app_name">"Изучение"</string>
+    <string name="app_name">"Изучение Слов"</string>
+    <string name="yes">"Да"</string>
+    <string name="no">"Нет"</string>
+    <string name="tolearn">"К изучению:"</string>
+    <string name="learnt">"Выучено: "</string>
+    <string name="English">"Английский"</string>
+    <string name="Russian">"Русский"</string>
+    <string name="hintEnterE">"Введите английское слово или выберите из предложенных"</string>
+    <string name="hintEnterR">"Введите перевод или используйте Yandex переводчик "</string>
+    <string name="add">"Добавит"</string>
+    <string name="Delete">"Удалить"</string>
+    <string name="Deleted">"Удалено"</string>
+    <string name="translate">"Перевести"</string>
+    <string name="Addsomewords">"Добавить слова"</string>
+    <string name="Right">"Правильно"</string>
+    <string name="Wrong">"Неправильно"</string>
+    <string name="Added">"Добавлено: "</string>
+    <string name="Youguessedright">"Угадано правильно?"</string>
+    <string name="Correctanswer">"Верный ответ:"</string>
+    <string name="Congratulations">"Отличная работа!!! \nВы выучили это слово!"</string>
+    <string name="gratsEngLearnt">"Поздравляю!!! \nВы вучили Английский вариант слова"</string>
+    <string name="gratsRusLearnt">"Поздравляю!!! \nВы вучили Русский вариант слова"</string>
+    <string name="TraslationError">"Ошибка переводчика"</string>
+    <string name="DeleteConfirmation">"Подтвердить удаление выбранных слов?"</string>
+    <string name="PurgeAll">"Удалить все данные и вернуться к изначальному состоянию?"</string>
+    <string name="Purge">"Очистка"</string>
 </resources>
